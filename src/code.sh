@@ -2,9 +2,13 @@
 # eggd_cgp-cobalt v1.0.0 — COBALT 3.0-beta.5 targeted tumour-only depth ratios
 # Converted from cgp-cobalt applet: metadata + timeoutPolicy + execDepends.
 # Tool flags and output names are FROZEN (downstream links depend on them).
-set -eo pipefail
+set -euo pipefail
 
 main() {
+    case "${sample_id}" in
+        *[!A-Za-z0-9._-]* | "" | .* | -* )
+            echo "ERROR: unsafe sample_id '${sample_id}' (allowed: A-Za-z0-9._-, no leading '-'/'.')" >&2; exit 1 ;;
+    esac
     echo "====================================================="
     echo " eggd_cgp-cobalt: COBALT targeted depth ratios"
     echo " Sample  : ${sample_id}"
@@ -12,8 +16,8 @@ main() {
 
     # ── 1. Download inputs ──────────────────────────────────────────────────
     # (system deps come from execDepends — no run-time apt-get)
-    java     -version  2>&1 | head -1
-    samtools --version 2>&1 | head -1
+    java     -version  2>&1 | sed -n '1p'
+    samtools --version 2>&1 | sed -n '1p'
 
     echo "[1/4] Downloading inputs..."
     dx download "${tumour_bam}"      -o tumour.bam
