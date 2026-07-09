@@ -32,6 +32,19 @@ main() {
     # COBALT needs the .fai next to the gz
     ln -sf ref.fa.fai ref.fa.gz.fai
 
+    # ── 1b. Validate chr-prefix on GRCh38 inputs ───────────────────────────
+    echo "Verifying chr-prefixed contigs on GRCh38 inputs..."
+    # Use capture-then-test to avoid SIGPIPE false-failures under set -o pipefail
+    bam_sq=$(samtools view -H tumour.bam | awk '/^@SQ/ && /SN:chr/{print; exit}' || true)
+    [[ -n "${bam_sq}" ]] \
+        || { echo "ERROR: tumour BAM does not have chr-prefixed contigs" >&2; exit 1; }
+    bed_chr=$(zcat DiploidRegions.38.bed.gz | grep -m1 '^[^#]' | cut -f1 || true)
+    [[ "${bed_chr}" == chr* ]] \
+        || { echo "ERROR: diploid_regions does not have chr-prefixed contigs" >&2; exit 1; }
+    cnp_chr=$(grep -m1 '^[^#]' GC_profile.1000bp.38.cnp | cut -f1 || true)
+    [[ "${cnp_chr}" == chr* ]] \
+        || { echo "ERROR: gc_profile does not have chr-prefixed contigs" >&2; exit 1; }
+
     # ── 2. Run COBALT ───────────────────────────────────────────────────────
     echo "[2/4] Running COBALT..."
     mkdir -p "${sample_id}"
