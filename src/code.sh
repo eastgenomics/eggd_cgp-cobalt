@@ -19,15 +19,16 @@ main() {
     java -version  2>&1 | sed -n '1p'
 
     echo "[1/4] Downloading inputs..."
-    dx download "${tumour_bam}"      -o tumour.bam                       &
-    dx download "${tumour_bai}"      -o tumour.bam.bai                   &
-    dx download "${cobalt_jar}"      -o cobalt.jar                       &
-    dx download "${norm_file}"       -o target_regions_normalisation.tsv &
-    dx download "${diploid_regions}" -o DiploidRegions.38.bed.gz         &
-    dx download "${gc_profile}"      -o GC_profile.1000bp.38.cnp         &
-    dx download "${ref_fasta}"       -o ref.fa.gz                        &
-    dx download "${ref_fai}"         -o ref.fa.fai                       &
-    wait
+    pids=()
+    dx download "${tumour_bam}"      -o tumour.bam                       & pids+=("$!")
+    dx download "${tumour_bai}"      -o tumour.bam.bai                   & pids+=("$!")
+    dx download "${cobalt_jar}"      -o cobalt.jar                       & pids+=("$!")
+    dx download "${norm_file}"       -o target_regions_normalisation.tsv & pids+=("$!")
+    dx download "${diploid_regions}" -o DiploidRegions.38.bed.gz         & pids+=("$!")
+    dx download "${gc_profile}"      -o GC_profile.1000bp.38.cnp         & pids+=("$!")
+    dx download "${ref_fasta}"       -o ref.fa.gz                        & pids+=("$!")
+    dx download "${ref_fai}"         -o ref.fa.fai                       & pids+=("$!")
+    for pid in "${pids[@]}"; do wait "${pid}" || { echo "ERROR: dx download failed (pid ${pid})"; exit 1; }; done
     # COBALT needs the .fai next to the gz
     ln -sf ref.fa.fai ref.fa.gz.fai
 
@@ -55,6 +56,7 @@ main() {
     [[ -s "${PCF_FILE}" ]]   || { echo "ERROR: COBALT ratio PCF missing"; exit 1; }
 
     WINDOWS=$(zcat "${RATIO_FILE}" | tail -n +2 | wc -l)
+    [[ "${WINDOWS}" -gt 0 ]] || { echo "ERROR: COBALT ratio TSV has no data rows"; exit 1; }
     echo "Ratio windows: ${WINDOWS}"
     ls -lh "${sample_id}/"
 
