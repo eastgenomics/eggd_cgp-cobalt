@@ -1,6 +1,6 @@
 # eggd_cgp-cobalt
 
-COBALT (Hartwig Medical Foundation, v3.0-beta.5) targeted tumour-only read-depth-ratio caller,
+[COBALT](https://github.com/hartwigmedical/hmftools/tree/master/cobalt) (Hartwig Medical Foundation, v3.0-beta.5) targeted tumour-only read-depth-ratio caller,
 packaged as a DNAnexus app. It is a parallel stage (with AMBER/SAGE) of the
 [`eggd_atlas_cnv`](https://github.com/eastgenomics/eggd_atlas_cnv) somatic CNV workflow: it
 computes read-depth ratios (with a target-region normalisation file) that PURPLE uses to fit
