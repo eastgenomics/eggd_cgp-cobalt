@@ -36,7 +36,8 @@ main() {
     echo "[2/4] Running COBALT..."
     mkdir -p "${sample_id}"
 
-    java -Xmx12G -jar cobalt.jar \
+    HEAP_MB=$(( $(awk '/MemTotal/{print $2}' /proc/meminfo) / 1024 - 2048 ))
+    java -Xmx${HEAP_MB}m -jar cobalt.jar \
         -tumor                   "${sample_id}" \
         -tumor_bam               tumour.bam \
         -target_region_norm_file target_regions_normalisation.tsv \
