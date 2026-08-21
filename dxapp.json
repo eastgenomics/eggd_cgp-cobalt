@@ -2,7 +2,7 @@
   "name": "eggd_cgp-cobalt",
   "title": "eggd_cgp-cobalt",
   "summary": "COBALT 3.0-beta.5 targeted tumour-only depth ratios with normalisation file",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "dxapi": "1.0.0",
   "developers": ["org-emee_1"],
   "authorizedUsers": ["org-emee_1"],
@@ -67,19 +67,14 @@
     "release": "24.04",
     "version": "0",
     "timeoutPolicy": {"*": {"hours": 6}},
-    "execDepends": [
+    "assetDepends": [
       {
-        "name": "openjdk-21-jre-headless",
-        "package_manager": "apt"
+        "id": "record-J9zVB3Q4p63ZKPgKqg98JYzj"
       },
       {
-        "name": "samtools",
-        "package_manager": "apt"
-      },
-      {
-        "name": "tabix",
-        "package_manager": "apt"
+        "id": "record-J9QzZyj487v9Gj2QgP7vK47g"
       }
+      
     ],
     "systemRequirements": {
       "*": {"instanceType": "mem2_ssd1_v2_x4"}
