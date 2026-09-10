@@ -35,4 +35,5 @@ dx run eggd_cgp-cobalt \
 ## Notes
 
 - **GRCh38 only**: `tumour_bam`, `diploid_regions`, and `gc_profile` must use
-  GRCh38 (`chr`-prefixed contigs)
+  GRCh38 (`chr`-prefixed contigs); the app passes `-ref_genome_version 38` to
+  COBALT and will not work with GRCh37 inputs.
