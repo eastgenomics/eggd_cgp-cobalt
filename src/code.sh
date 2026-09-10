@@ -53,6 +53,7 @@ main() {
         -target_region_norm_file target_regions_normalisation.tsv \
         -tumor_only_diploid_bed  DiploidRegions.38.bed.gz \
         -gc_profile              GC_profile.1000bp.38.cnp \
+        -ref_genome_version      38 \
         -bam_validation          SILENT \
         -threads                 "$(nproc)" \
         -output_dir              "${sample_id}/"
