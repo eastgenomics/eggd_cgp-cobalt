@@ -44,16 +44,6 @@
       "name": "gc_profile",
       "class": "file",
       "label": "GC_profile.1000bp.38.cnp (chr)"
-    },
-    {
-      "name": "ref_fasta",
-      "class": "file",
-      "label": "Reference FASTA no-chr (.fa.gz) — COBALT internal use"
-    },
-    {
-      "name": "ref_fai",
-      "class": "file",
-      "label": "Reference FASTA index (.fa.fai)"
     }
   ],
   "outputSpec": [
