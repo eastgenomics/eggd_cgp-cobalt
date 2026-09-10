@@ -26,11 +26,8 @@ main() {
     dx download "${norm_file}"       -o target_regions_normalisation.tsv & pids+=("$!")
     dx download "${diploid_regions}" -o DiploidRegions.38.bed.gz         & pids+=("$!")
     dx download "${gc_profile}"      -o GC_profile.1000bp.38.cnp         & pids+=("$!")
-    dx download "${ref_fasta}"       -o ref.fa.gz                        & pids+=("$!")
-    dx download "${ref_fai}"         -o ref.fa.fai                       & pids+=("$!")
     for pid in "${pids[@]}"; do wait "${pid}" || { echo "ERROR: dx download failed (pid ${pid})"; exit 1; }; done
-    # COBALT needs the .fai next to the gz
-    ln -sf ref.fa.fai ref.fa.gz.fai
+
 
     # ── 1b. Validate chr-prefix on GRCh38 inputs ───────────────────────────
     echo "Verifying chr-prefixed contigs on GRCh38 inputs..."
@@ -56,7 +53,6 @@ main() {
         -target_region_norm_file target_regions_normalisation.tsv \
         -tumor_only_diploid_bed  DiploidRegions.38.bed.gz \
         -gc_profile              GC_profile.1000bp.38.cnp \
-        -ref_genome              ref.fa.gz \
         -ref_genome_version      38 \
         -bam_validation          SILENT \
         -threads                 "$(nproc)" \

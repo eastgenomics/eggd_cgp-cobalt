@@ -16,7 +16,6 @@ copy number.
 | `norm_file` | file | `target_regions_normalisation.tsv` |
 | `diploid_regions` | file | `DiploidRegions.38.bed.gz` (chr) |
 | `gc_profile` | file | `GC_profile.1000bp.38.cnp` (chr) |
-| `ref_fasta` / `ref_fai` | file | reference FASTA (bgzf) + index |
 
 ## Outputs
 
@@ -30,7 +29,7 @@ copy number.
 dx run eggd_cgp-cobalt \
   -itumour_bam=... -itumour_bai=... -isample_id=SAMPLE_ID \
   -icobalt_jar=... -inorm_file=... -idiploid_regions=... \
-  -igc_profile=... -iref_fasta=... -iref_fai=...
+  -igc_profile=... 
 ```
 
 ## Notes
@@ -38,5 +37,3 @@ dx run eggd_cgp-cobalt \
 - **GRCh38 only**: `tumour_bam`, `diploid_regions`, and `gc_profile` must use
   GRCh38 (`chr`-prefixed contigs); the app passes `-ref_genome_version 38` to
   COBALT and will not work with GRCh37 inputs.
-- `ref_fasta` must be a **bgzipped** `.fa.gz` with no `chr` prefix (COBALT
-  internal requirement); `ref_fai` must be the matching `.fa.fai` index.

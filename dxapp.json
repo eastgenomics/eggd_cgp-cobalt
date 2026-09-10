@@ -2,9 +2,9 @@
   "name": "eggd_cgp-cobalt",
   "title": "eggd_cgp-cobalt",
   "summary": "COBALT 3.0-beta.5 targeted tumour-only depth ratios with normalisation file",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "whatsNew":{
-    "v1.0.1":"Removed the apt install execution to replace it with asset record IDs for openjdk-21-jre-headless and htslib_suite_asset."
+    "v1.0.2":"Removed reference fasta input."
   }, 
   "dxapi": "1.0.0",
   "developers": ["org-emee_1"],
@@ -44,16 +44,6 @@
       "name": "gc_profile",
       "class": "file",
       "label": "GC_profile.1000bp.38.cnp (chr)"
-    },
-    {
-      "name": "ref_fasta",
-      "class": "file",
-      "label": "Reference FASTA no-chr (.fa.gz) — COBALT internal use"
-    },
-    {
-      "name": "ref_fai",
-      "class": "file",
-      "label": "Reference FASTA index (.fa.fai)"
     }
   ],
   "outputSpec": [
